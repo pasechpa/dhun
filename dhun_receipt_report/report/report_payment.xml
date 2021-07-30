@@ -60,10 +60,6 @@
                     </table>
                 </t>
             </t>
-            <h3>Testing Section:</h3>
-            <p><span t-esc="o.reconciled_invoice_ids[0].l10n_mx_edi_payment_policy"></span></p>
-            <p><span t-esc="o.reconciled_invoices_count"></span></p>
-            <p><span t-esc="o.reconciled_invoice_ids[0].name"></span></p>
             <t t-if="o.reconciled_invoice_ids[0].l10n_mx_edi_payment_policy =='PUE'">
                 <table class="table table-sm">
                     <thead>
