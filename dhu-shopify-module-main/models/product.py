@@ -62,6 +62,7 @@ class ProductTemplate(models.Model):
             "multiple_sell": self.x_studio_mltiplo_de_10,
             "quotation_only": self.x_studio_solo_cotizar_1,
             "outlet": self.x_studio_outlet,
+            "marca": self.x_studio_marca,
             "product_accesories": self.get_products_accesories(),
             "product_alternatives": self.get_alternatives_products(),
             "variants": [
