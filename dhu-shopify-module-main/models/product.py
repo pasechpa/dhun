@@ -34,14 +34,23 @@ class ProductTemplate(models.Model):
 
     def get_variant_price(self):
         price = self.list_price
+        currencyName = ""
+        currencyRate = 1
         price_list = self.env['product.pricelist.item'].sudo().search([('product_tmpl_id', '=', self.id)])
         for item in price_list:
             if(item.pricelist_id.name == "EC 5 USD"):
                 price = item.fixed_price
+                currencyName = item.currency_id.name
+                currencyRate = item.currency_id.rate
                 break
             if(item.pricelist_id.name == "ME 1 USD"):
                 price = item.fixed_price
-        return price
+                currencyName = item.currency_id.name
+                currencyRate = item.currency_id.rate
+        
+        _logger.info(_("Name: %s") % currencyName)
+        _logger.info(_("Rate: %s") % currencyRate)
+        return (price / currencyRate)
 
     def get_product_parent_tags(self):
         res_categ = []
