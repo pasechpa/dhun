@@ -32,6 +32,16 @@ class ProductTemplate(models.Model):
             })
         return acc_products
 
+    def get_variant_price(self):
+        price = self.list_price
+        price_list = self.env['product.pricelist.item'].sudo().search([('product_tmpl_id', '=', self.id)])
+        for item in price_list:
+            if(item.pricelist_id.name == "EC 5 USD"):
+                price = item.fixed_price
+                break
+            if(item.pricelist_id.name == "ME 1 USD"):
+                price = item.fixed_price
+        return price
 
     def get_product_parent_tags(self):
         res_categ = []
@@ -73,7 +83,7 @@ class ProductTemplate(models.Model):
                                      variant_attribute in
                                      variant.product_template_attribute_value_ids],
                     "stock": variant.qty_available - variant.outgoing_qty,
-                    "sales_price": variant.list_price,
+                    "sales_price": self.get_variant_price(),
                     "barcode": variant.barcode,
                     "shopify_variant_id": variant.shopify_variant_id
                 } for variant in variants
